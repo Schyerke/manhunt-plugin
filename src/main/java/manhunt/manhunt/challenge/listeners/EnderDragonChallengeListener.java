@@ -5,7 +5,6 @@ import manhunt.manhunt.Managers;
 import manhunt.manhunt.Pair;
 import manhunt.manhunt.challenge.Challenge;
 import manhunt.manhunt.game.events.GameEndEvent;
-import manhunt.manhunt.inventory.InventoryNames;
 import manhunt.manhunt.player.PlayerInGameManager;
 import manhunt.manhunt.role.RoleManager;
 import org.bukkit.Bukkit;
@@ -19,8 +18,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -99,18 +98,12 @@ public class EnderDragonChallengeListener implements Listener {
 
     // Hunter cant drop the compass
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent e) {
-        Player player = (Player) e.getWhoClicked();
-        final RoleManager roleManager = Managers.getRoleManager();
-        if(roleManager.isHunter(player)){
-            ItemStack item = e.getCurrentItem();
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        Player p = event.getPlayer();
 
-            if(item == null || item.getType() == Material.AIR)
-                return;
-
-            if(item.getItemMeta().getDisplayName().equals(InventoryNames.HUNTER_COMPASS_INVENTORY_TRIGGER)) {
-                e.setCancelled(true);
-            }
+        if (event.getItemDrop().getItemStack().getType() == Material.COMPASS) {
+            event.setCancelled(true);
+            p.sendMessage(ChatColor.RED + "You can't drop the item");
         }
     }
 
