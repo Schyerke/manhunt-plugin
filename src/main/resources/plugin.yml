@@ -1,0 +1,25 @@
+name: Manhunt
+version: '${project.version}'
+main: manhunt.manhunt.Manhunt
+api-version: 1.18
+authors: [ Schyerke ]
+description: a manhunt plugin for me and my kriz
+commands:
+  start:
+    description: start the manhunt
+    usage: /start
+  chooseRole:
+    description: choose your role
+    usage: /chooseRole
+  hunterCompass:
+    description: get a compass to track runners
+    usage: /hunterCompass
+  leave:
+    description: leave the manhunt game
+    usage: /leave
+  challenge:
+    description: choose a challenge
+    usage: /challenge
+  gethuntercompass:
+    description: get a compass to track runners
+    usage: /gethuntercompass
