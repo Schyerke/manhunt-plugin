@@ -1,6 +1,7 @@
 package manhunt.manhunt.player.listeners;
 
 import manhunt.manhunt.Managers;
+import manhunt.manhunt.persistent.PlayerWrapper;
 import manhunt.manhunt.player.PlayerManager;
 import manhunt.manhunt.role.RoleManager;
 import org.bukkit.ChatColor;
@@ -18,6 +19,12 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        PlayerWrapper playerWrapper = playerManager.loadPlayerWrapper(player);
+        playerManager.addPlayer(playerWrapper);
+
+        // scoreboards
+
+
         if(playerManager.isPlayerQuit(player.getName())){
             playerManager.removePlayerQuitName(player.getName());
 

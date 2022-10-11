@@ -1,4 +1,4 @@
-package manhunt.manhunt.player;
+package manhunt.manhunt.persistent;
 
 public class PlayerStatistics {
     private int kills;

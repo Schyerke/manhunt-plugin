@@ -2,6 +2,9 @@ package manhunt.manhunt.player;
 
 import manhunt.manhunt.Constants;
 import manhunt.manhunt.inventory.InventoryObjectTriggers;
+import manhunt.manhunt.persistent.FileHelper;
+import manhunt.manhunt.persistent.PlayerStatistics;
+import manhunt.manhunt.persistent.PlayerWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -27,14 +30,8 @@ public class PlayerManager {
     private final List<PlayerWrapper> players = new ArrayList<>();
     private final List<String> playerQuitNames = new ArrayList<>();
 
-    //TODO DA FINIRE
-    public PlayerStatistics getPlayerStatistics(Player player){
-        return null;
-    }
 
     public void onJoin(Player player){
-        PlayerStatistics statistics = getPlayerStatistics(player);
-        players.add(new PlayerWrapper(player, statistics));
 
         player.setGameMode(GameMode.ADVENTURE);
 
@@ -73,7 +70,7 @@ public class PlayerManager {
 
     public PlayerWrapper findPlayerWrapperByPlayer(Player player){
         for (PlayerWrapper playerWrapper : players) {
-            if(playerWrapper.getPlayer().equals(player)){
+            if(playerWrapper.getPlayer().getDisplayName().equals(player.getDisplayName())){
                 return playerWrapper;
             }
         }
@@ -108,5 +105,18 @@ public class PlayerManager {
             }
         }
         return null;
+    }
+
+    public void addPlayer(PlayerWrapper playerWrapper) {
+        players.add(playerWrapper);
+    }
+
+    // read from FileHelper data and find player in the json, and then create a PlayerStatistics object
+    public PlayerWrapper loadPlayerWrapper(Player player) {
+        PlayerWrapper playerWrapper = FileHelper.getInstance().loadPlayerStatistics(player);
+        if(playerWrapper == null){
+            FileHelper.getInstance().savePlayerStatistics(new PlayerWrapper(player, new PlayerStatistics(0, 0, 0, 0)));
+        }
+        return playerWrapper;
     }
 }

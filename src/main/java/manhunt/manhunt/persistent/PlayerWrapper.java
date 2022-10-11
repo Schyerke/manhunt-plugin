@@ -1,6 +1,5 @@
-package manhunt.manhunt.player;
+package manhunt.manhunt.persistent;
 
-import manhunt.manhunt.role.Role;
 import org.bukkit.entity.Player;
 
 public class PlayerWrapper {
